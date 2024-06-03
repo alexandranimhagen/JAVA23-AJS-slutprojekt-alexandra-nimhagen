@@ -1,0 +1,34 @@
+# dependencies
+/node_modules
+
+# production
+/dist
+
+# parcel cache
+/.parcel_cache
+
+# Windows specific directories
+/AppData/Local/AMD/DxCache/
+/AppData/Local/Microsoft/Windows/INetCache/
+/AppData/Local/Microsoft/Windows/Temporary Internet Files/
+/AppData/Local/Temp/
+/AppData/Local/Programdata/
+/AppData/Roaming/Microsoft/Windows/Start Menu/Program/
+/AppData/Local/Temporary Internet Files/
+/Cookies/
+/Documents/Min musik/
+/Documents/Mina bilder/
+/Documents/Mina videoklipp/
+/Lokala inställningar/
+/Mallar/
+/Mina dokument/
+/Nätverket/
+/Programdata/
+/Recent/
+/SendTo/
+/Skrivare/
+/Start-meny/
+
+/npm-debug.log*
+/yarn-debug.log*
+/yarn-error.log*

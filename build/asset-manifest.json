@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/JAVA23-AJS-slutprojekt-alexandra-nimhagen/static/css/main.17561d44.css",
+    "main.js": "/JAVA23-AJS-slutprojekt-alexandra-nimhagen/static/js/main.38d2afd1.js",
+    "static/js/488.f07f6f74.chunk.js": "/JAVA23-AJS-slutprojekt-alexandra-nimhagen/static/js/488.f07f6f74.chunk.js",
+    "index.html": "/JAVA23-AJS-slutprojekt-alexandra-nimhagen/index.html",
+    "main.17561d44.css.map": "/JAVA23-AJS-slutprojekt-alexandra-nimhagen/static/css/main.17561d44.css.map",
+    "main.38d2afd1.js.map": "/JAVA23-AJS-slutprojekt-alexandra-nimhagen/static/js/main.38d2afd1.js.map",
+    "488.f07f6f74.chunk.js.map": "/JAVA23-AJS-slutprojekt-alexandra-nimhagen/static/js/488.f07f6f74.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.17561d44.css",
+    "static/js/main.38d2afd1.js"
+  ]
+}
