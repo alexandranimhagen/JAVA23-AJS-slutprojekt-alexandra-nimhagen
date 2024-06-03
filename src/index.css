@@ -12,7 +12,7 @@ h1 {
   text-align: center;
   margin-bottom: 40px;
   font-size: 2.5em;
-  color: #4A4A4A; 
+  color: #5f5b5b; 
 }
 
 .card {
@@ -56,7 +56,6 @@ h1 {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-
 
 .option-ux {
   background-color: #7FBCD2; 
@@ -124,7 +123,6 @@ code {
   background-color: #29ADB2; 
   color: white;
 }
-
 
 .btn-remove-task {
   position: absolute;

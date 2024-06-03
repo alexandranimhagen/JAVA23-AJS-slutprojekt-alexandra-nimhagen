@@ -1,4 +1,3 @@
-// src/components/TaskList.js
 import React, { useState } from 'react';
 import { db } from '../firebase';
 import { updateDoc, deleteDoc, doc } from 'firebase/firestore';
@@ -24,6 +23,11 @@ const TaskList = ({ tasks, setTasks, loading }) => {
   const [error, setError] = useState(null);
 
   const assignTask = async (id) => {
+    if (!assignee) {
+      window.alert("Please assign the task to someone before proceeding.");
+      return;
+    }
+
     try {
       const taskDoc = doc(db, 'assignments', id);
       await updateDoc(taskDoc, { assigned: assignee, status: 'in progress' });
@@ -102,15 +106,15 @@ const TaskList = ({ tasks, setTasks, loading }) => {
       {error && <p className="text-danger mt-3">{error}</p>}
       <div className="row">
         <div className="col-md-4">
-          <h2>To Do</h2>
+          <h2 className="column-header">To Do</h2>
           {renderTasks('to do')}
         </div>
         <div className="col-md-4">
-          <h2>In Progress</h2>
+          <h2 className="column-header">In Progress</h2>
           {renderTasks('in progress')}
         </div>
         <div className="col-md-4">
-          <h2>Done</h2>
+          <h2 className="column-header">Done</h2>
           {renderTasks('done')}
         </div>
       </div>
