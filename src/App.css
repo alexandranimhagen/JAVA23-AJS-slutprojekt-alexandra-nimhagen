@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
 body {
   padding: 20px;
   background-color: #ffe599;
@@ -27,10 +29,42 @@ h1 {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: #5f5b5b;
+  position: relative;
 }
 
 .card-body {
   padding: 20px;
+}
+
+.category-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.8em;
+}
+
+
+.tag-ux {
+  background-color: #ffecb3;
+}
+
+.tag-design {
+  background-color: #f5d1d1;
+}
+
+.tag-testing {
+  background-color: #e6c8f2;
+}
+
+.tag-dev-frontend {
+  background-color: #a8d5e2;
+}
+
+.tag-dev-backend {
+  background-color: #c2e5d3;
 }
 
 .form-control, .form-select {
@@ -54,6 +88,26 @@ h1 {
   margin-bottom: 20px;
 }
 
+.btn-done {
+  background-color: #29ADB2; 
+  color: white;
+}
+
+.btn-remove {
+  background-color: #29ADB2; 
+  color: white;
+}
+
+.btn-remove-task {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 1.5em;
+  color: #333;
+  cursor: pointer;
+}
 .btn:hover {
   background-color: #198754;
 }
@@ -64,13 +118,27 @@ h1 {
 }
 
 .row {
-  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-column {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.column-header {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #5f5b5b;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
   color: #5f5b5b; 
 }
+
 .option-ux {
   background-color: #ffecb3; 
   color: #5f5b5b;
@@ -122,10 +190,18 @@ code {
 }
 
 .add-task-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center; 
+}
+
+.flex-container {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
+  width: 100%;
+  max-width: 800px; 
+  justify-content: center; 
 }
 
 .task-input, .task-category {
@@ -165,40 +241,22 @@ code {
 .add-task-button:hover {
   background-color: #198754;
 }
-.modal {
-  display: none;
+
+.custom-alert {
   position: fixed;
-  z-index: 100;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: auto; 
-  height: auto; 
-  background-color: rgba(0, 0, 0, 0.5); 
+  top: 10px;
+  right: 10px;
+  background-color: #f44336; 
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000; 
 }
 
-.modal-content {
-  background-color: #fefefe;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 600px;
-  border-radius: 10px;
-  position: relative;
-  text-align: center;
-}
-
-
-.close-btn {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close-btn:hover,
-.close-btn:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+.error-message {
+  color: #f44336;
+  font-size: 0.9em;
+  margin-top: -10px;
+  margin-bottom: 10px;
 }

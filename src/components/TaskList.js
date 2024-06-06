@@ -18,13 +18,36 @@ const buttonClassNames = {
   'testing': 'btn-testing'
 };
 
+const categoryTagClassNames = {
+  'ux': 'tag-ux',
+  'dev frontend': 'tag-dev-frontend',
+  'dev backend': 'tag-dev-backend',
+  'design': 'tag-design',
+  'testing': 'tag-testing'
+};
+
 const TaskList = ({ tasks, setTasks, loading }) => {
-  const [assignee, setAssignee] = useState('');
   const [error, setError] = useState(null);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [assignees, setAssignees] = useState({});
+  const [assigneeErrors, setAssigneeErrors] = useState({});
+
+  const showAlert = (message) => {
+    setAlertMessage(message);
+    setTimeout(() => {
+      setAlertMessage('');
+    }, 3000); 
+  };
+
+  const handleAssigneeChange = (id, value) => {
+    setAssignees((prev) => ({ ...prev, [id]: value }));
+    setAssigneeErrors((prev) => ({ ...prev, [id]: '' }));
+  };
 
   const assignTask = async (id) => {
+    const assignee = assignees[id];
     if (!assignee) {
-      window.alert("Please assign the task to someone before proceeding.");
+      setAssigneeErrors((prev) => ({ ...prev, [id]: "Please assign the task to someone before proceeding." }));
       return;
     }
 
@@ -34,7 +57,8 @@ const TaskList = ({ tasks, setTasks, loading }) => {
       setTasks(prevTasks => prevTasks.map(task => 
         task.id === id ? { ...task, assigned: assignee, status: 'in progress' } : task
       ));
-      setAssignee('');
+      setAssignees((prev) => ({ ...prev, [id]: '' }));
+      setAssigneeErrors((prev) => ({ ...prev, [id]: '' }));
       setError(null);
     } catch (error) {
       setError("Error assigning task: " + error.message);
@@ -67,34 +91,46 @@ const TaskList = ({ tasks, setTasks, loading }) => {
     }
   };
 
-  const renderTasks = (status) => {
-    return tasks.filter(task => task.status === status).map(task => (
-      <div key={task.id} className={`card mb-3 ${categoryClassNames[task.category]}`}>
-        <div className="card-body">
-          <button className="close btn-remove-task" onClick={() => removeTask(task.id)}>×</button>
-          <h5 className="card-title">{task.assignment}</h5>
-          <p className="card-text">Assigned to: {task.assigned}</p>
-          {status === 'to do' && (
-            <div>
-              <input
-                type="text"
-                className="form-control mb-2"
-                placeholder="Assign to"
-                value={assignee}
-                onChange={(e) => setAssignee(e.target.value)}
-              />
-              <button className={`btn w-100 ${buttonClassNames[task.category]}`} onClick={() => assignTask(task.id)}>Assign</button>
+  const renderTasks = (status, statusTitle) => {
+    return (
+      <div className="task-column">
+        <h2 className="column-header">{statusTitle}</h2>
+        {tasks.filter(task => task.status === status).map(task => {
+          const assignee = assignees[task.id] || '';
+          const assigneeError = assigneeErrors[task.id] || '';
+          return (
+            <div key={task.id} className={`card mb-3 ${categoryClassNames[task.category]}`}>
+              <div className="card-body">
+                <div className={`category-tag ${categoryTagClassNames[task.category]}`}>{task.category}</div>
+                <h5 className="card-title">{task.assignment}</h5>
+                <p className="card-text">Assigned to: {task.assigned}</p>
+                {status === 'to do' && (
+                  <div>
+                    <div className="input-container">
+                      <input
+                        type="text"
+                        className="form-control mb-2"
+                        placeholder="Enter name"
+                        value={assignee}
+                        onChange={(e) => handleAssigneeChange(task.id, e.target.value)}
+                      />
+                      {assigneeError && <div className="custom-tooltip">{assigneeError}</div>}
+                    </div>
+                    <button className={`btn w-100 ${buttonClassNames[task.category]}`} onClick={() => assignTask(task.id)}>Assign</button>
+                  </div>
+                )}
+                {status === 'in progress' && (
+                  <button className={`btn w-100 btn-done`} onClick={() => markAsDone(task.id)}>Done</button>
+                )}
+                {status === 'done' && (
+                  <button className={`btn w-100 btn-remove`} onClick={() => removeTask(task.id)}>Remove</button>
+                )}
+              </div>
             </div>
-          )}
-          {status === 'in progress' && (
-            <button className={`btn w-100 btn-done`} onClick={() => markAsDone(task.id)}>Done</button>
-          )}
-          {status === 'done' && (
-            <button className={`btn w-100 btn-remove`} onClick={() => removeTask(task.id)}>Remove</button>
-          )}
-        </div>
+          );
+        })}
       </div>
-    ));
+    );
   };
 
   if (loading) {
@@ -104,19 +140,11 @@ const TaskList = ({ tasks, setTasks, loading }) => {
   return (
     <div className="container">
       {error && <p className="text-danger mt-3">{error}</p>}
+      {alertMessage && <div className="custom-alert">{alertMessage}</div>}
       <div className="row">
-        <div className="col-md-4">
-          <h2 className="column-header">To Do</h2>
-          {renderTasks('to do')}
-        </div>
-        <div className="col-md-4">
-          <h2 className="column-header">In Progress</h2>
-          {renderTasks('in progress')}
-        </div>
-        <div className="col-md-4">
-          <h2 className="column-header">Done</h2>
-          {renderTasks('done')}
-        </div>
+        {renderTasks('to do', 'To Do')}
+        {renderTasks('in progress', 'In Progress')}
+        {renderTasks('done', 'Done')}
       </div>
     </div>
   );

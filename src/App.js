@@ -17,6 +17,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [assignment, setAssignment] = useState('');
   const [category, setCategory] = useState('');
+  const [assignmentError, setAssignmentError] = useState('');
+  const [categoryError, setCategoryError] = useState('');
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -28,15 +30,28 @@ function App() {
     fetchTasks();
   }, []);
 
-  const handleTaskAdded = async () => {
+  const handleTaskAdded = async (event) => {
+    event.preventDefault();
+    let hasError = false;
+
     if (!assignment) {
-      window.alert("Assignment field cannot be empty");
-      return;
+      setAssignmentError("Assignment field cannot be empty");
+      hasError = true;
+    } else {
+      setAssignmentError('');
     }
+
     if (!category) {
-      window.alert("Please select a category");
+      setCategoryError("Please select a category");
+      hasError = true;
+    } else {
+      setCategoryError('');
+    }
+
+    if (hasError) {
       return;
     }
+
     const newTask = {
       assignment,
       category,
@@ -53,26 +68,36 @@ function App() {
     <div className="container">
       <h1 className="my-4">Scrum Board</h1>
       <div className="add-task-container">
-        <input
-          type="text"
-          className="form-control task-input"
-          placeholder="Assignment"
-          value={assignment}
-          onChange={(e) => setAssignment(e.target.value)}
-        />
-        <select
-          className="form-select task-category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="" className="option-default">Select Category</option>
-          {Object.keys(categoryClassNames).map(cat => (
-            <option key={cat} value={cat} className={categoryClassNames[cat]}>
-              {cat.charAt(0).toUpperCase() + cat.slice(1)}
-            </option>
-          ))}
-        </select>
-        <button className="btn add-task-button" onClick={handleTaskAdded}>Add Task</button>
+        <form onSubmit={handleTaskAdded} className="flex-container">
+          <div className="input-container">
+            <input
+              type="text"
+              className="form-control task-input"
+              placeholder="Assignment"
+              value={assignment}
+              onChange={(e) => setAssignment(e.target.value)}
+              required
+            />
+            {assignmentError && <div className="custom-tooltip">{assignmentError}</div>}
+          </div>
+          <div className="input-container">
+            <select
+              className="form-select task-category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              required
+            >
+              <option value="" className="option-default">Select Category</option>
+              {Object.keys(categoryClassNames).map(cat => (
+                <option key={cat} value={cat} className={categoryClassNames[cat]}>
+                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </option>
+              ))}
+            </select>
+            {categoryError && <div className="custom-tooltip">{categoryError}</div>}
+          </div>
+          <button type="submit" className="btn add-task-button">Add Task</button>
+        </form>
       </div>
       <TaskList tasks={tasks} setTasks={setTasks} loading={loading} />
     </div>
