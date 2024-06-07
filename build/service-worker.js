@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/JAVA23-AJS-slutprojekt-alexandra-nimhagen/precache-manifest.7bce86d3576d734ec248705303e3f2b9.js"
+  "/JAVA23-AJS-slutprojekt-alexandra-nimhagen/precache-manifest.8330e400850b3c2da60554dea604a507.js"
 );
 
 self.addEventListener('message', (event) => {
